@@ -1,0 +1,114 @@
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+void  drawseat(int seat[10][6])
+{
+    cout << endl;
+    cout << "1  2  3      4  5  6" << endl;  // 좌석 번호 
+    cout << "--------------------" << endl; // r경계선
+
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 6; j++) {
+            if (j == 3) cout << "    ";  // 통로 
+            cout << seat[i][j] << "  ";  // 예약 현황
+        }
+        cout << endl;
+    }
+
+}
+
+
+
+void newreservation(int seat[10][6])
+{ //새로운 좌석 예약 
+    cout << endl << "몇 열, 몇 번째 좌석을 예약하시겠습니까? ";
+    int row, col;
+    cin >> row >> col;
+
+    // 해당 좌석이 존재하지 않는 경우
+    if (row < 1 || row > 10 || col < 1 || col > 6) {
+        cout << "해당 좌석은 존재하지 않는 좌석입니다." << endl;
+    }
+    // 이미 예약된 좌석인 경우
+    else if (seat[row - 1][col - 1] == 1) {
+        cout << "이미 예약된 좌석입니다." << endl;
+    }
+    else {
+        cout << "선택하신 좌석이 예약 가능합니다. 예약하시겠습니까? (y/n): ";
+        char confirm;
+        cin >> confirm;
+        if (confirm == 'y') {
+            seat[row - 1][col - 1] = 1;
+            cout << "좌석 예약이 완료되었습니다." << endl;
+        }
+        else {
+            cout << "좌석 예약이 취소되었습니다." << endl;
+        }
+    }
+}
+
+
+
+
+
+void reservation(int seat[10][6])
+{   // 좌석 변경 
+    int curr_length, curr_width, new_length, new_width;  // 현재 좌석과 변경할 좌석
+    cout << "현재 좌석과 변경하고자 하는 좌석을 각각 열, 번호 순서로 입력해 주세요: ";
+    cin >> curr_length >> curr_width >> new_length >> new_width;
+
+    if (seat[curr_length - 1][curr_width - 1] == 0) { //현재 좌석이 예약되지 않은 좌석일 경우
+        cout << "좌석을 정확히 입력해 주세요" << endl;
+    }
+    // 예약 불가능한 경우
+    else if (seat[new_length - 1][new_width - 1] == 1) {
+        cout << "이미 예약된 좌석입니다. 변경할 수 없습니다." << endl;
+    }
+    else {
+        seat[new_length - 1][new_width - 1] = 1;  // 변경할 좌석 예약 처리
+        seat[curr_length - 1][curr_width - 1] = 0;  // 현재 좌석 취소 처리
+        cout << "좌석 변경이 완료되었습니다." << endl;
+    }
+}
+
+
+
+
+int main(void)
+{
+    int seat[10][6] = {};
+    int menu;
+
+    while (true) { //사용자가 원하는 번호를 선택
+        cout << "** 비행기 좌석 시스템**" << endl;
+        cout << endl;
+        cout << "1. 신규 예약" << endl;
+        cout << "2. 예약 변경" << endl;
+        cout << "3. 프로그램 종료" << endl;
+        cout << endl;
+        cout << "번호를 입력하세요: ";
+        cin >> menu;
+
+        if (menu == 1) {
+            drawseat(seat);
+            newreservation(seat);
+        }
+
+        else if (menu == 2) {
+            //예약 변경 
+            drawseat(seat);
+            reservation(seat);
+        }
+
+        else if (menu == 3) {
+            //프로그램 종료 
+            cout << "프로그램을 종료합니다.";
+            exit(0);
+        }
+        else {
+            //잘못된 입력을 했을 경우
+            cout << "올바른 숫자를 입력해 주세요. \n";
+        }
+    }
+}
