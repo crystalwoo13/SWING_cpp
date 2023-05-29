@@ -115,7 +115,7 @@ int main(void)
                 cout << i + 1 << ". " << complete_list[i] << endl;
             }
             continue;
-        //원하는 날짜를 다시 선택하여 다시 main함수 
+        //원하는 날짜를 다시 선택하여 다시 main함수 실행 
         
         case 4:
             cout << "프로그램을 종료합니다." << endl;
