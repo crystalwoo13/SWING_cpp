@@ -1,0 +1,121 @@
+#include <iostream> 
+#include <string>
+using namespace std;
+
+string todo_list[100];
+int todo_count = 0;
+string complete_list[100];
+int complete_count = 0;
+
+void todoinput() {
+    cout << "[ 할 일 추가 ]" << endl << endl;
+    cout << "할 일을 입력하세요(완료 후 'end' 입력)" << endl << endl;
+
+    string input;
+    cin >> input;
+
+    while (input != "end") {
+        todo_list[todo_count] = input;
+        todo_count++;
+        cin >> input;
+    }
+    cout << endl << "============== TO DO ===============" << endl << endl;
+    for (int i = 0; i < todo_count; i++) {
+        cout << i + 1 << ". " << todo_list[i] << endl;
+    }
+}
+
+void completeinput()
+{
+    cout << "[ 완료한 일 추가 ]" << endl << endl;
+    cout << "완료한 일의 번호를 입력하세요 : ";
+
+    int index;
+    cin >> index;
+
+    if (index >= 1 && index <= todo_count) {
+        string completed_item = todo_list[index - 1];
+        complete_list[complete_count] = completed_item;
+        complete_count++;
+
+        for (int i = index - 1; i < todo_count - 1; i++) {
+            todo_list[i] = todo_list[i + 1];
+        }
+        todo_count--;
+
+        cout << endl << "============= COMPLETE =============" << endl << endl;
+        for (int i = 0; i < complete_count; i++) {
+            cout << i + 1 << ". " << complete_list[i] << endl;
+        }
+
+        cout << endl << "============== TO DO ===============" << endl << endl;
+        for (int i = 0; i < todo_count; i++) {
+            cout << i + 1 << ". " << todo_list[i] << endl;
+        }
+    }
+    else {
+        cout << "유효하지 않은 번호입니다." << endl;
+    }
+}
+
+int main(void)
+{
+    int month, day, num;
+
+    cout << "============ 2023 TO DO ============" << endl << endl;
+    cout << "원하는 달(월)을 입력하세요 > ";
+    cin >> month;
+    cout << "원하는 날(일)을 입력하세요 > ";
+    cin >> day;
+
+    while (1)
+    {
+        cout << endl << "====================================" << endl << endl;
+
+        cout << "1. 할 일 추가" << endl;
+        cout << "2. 완료한 일 추가" << endl;
+        cout << "3. 날짜 선택" << endl;
+        cout << "4. 종료" << endl << endl;
+        cout << "번호를 입력하세요 >> ";
+        cin >> num;
+        cout << endl;
+
+        switch (num)
+        {
+        case 1:
+            todoinput();
+            continue;
+
+        case 2:
+            completeinput();
+            continue;
+        case 3:
+            cout << "원하는 달(월)을 입력하세요 > ";
+            cin >> month;
+            cout << "원하는 날(일)을 입력하세요 > ";
+            cin >> day;
+
+            cout << endl << "============== TO DO ===============" << endl << endl;
+            cout << "날짜: " << month << "월 " << day << "일" << endl << endl;
+
+            for (int i = 0; i < todo_count; i++) {
+                cout << i + 1 << ". " << todo_list[i] << endl;
+            }
+
+            cout << endl << "============= COMPLETE =============" << endl << endl;
+            cout << "날짜: " << month << "월 " << day << "일" << endl << endl;
+
+            for (int i = 0; i < complete_count; i++) {
+                cout << i + 1 << ". " << complete_list[i] << endl;
+            }
+            continue;
+        case 4:
+            cout << "프로그램을 종료합니다." << endl;
+            return 0;
+
+        default:
+            cout << "유효하지 않은 번호입니다. 다시 입력하세요." << endl;
+            continue;
+        }
+    }
+}
