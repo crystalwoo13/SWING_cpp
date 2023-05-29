@@ -3,58 +3,60 @@
 using namespace std;
 
 string todo_list[100];
-int todo_count = 0;
+int todo_count = 0;  //최대 100개의 할 일을 저장할 수 있는 문자열 배열로 현재 0개의 할일이 저장되어 있음
 string complete_list[100];
-int complete_count = 0;
+int complete_count = 0;  //최대 100개의 완료된 일을 저장할 수 있는 문자열 배열로 현재 0개의 완료된 일이 저장되어 있음
 
-void todoinput() {
+void todoinput() {  //할 일을 목록에 추가하는 함수
     cout << "[ 할 일 추가 ]" << endl << endl;
     cout << "할 일을 입력하세요(완료 후 'end' 입력)" << endl << endl;
 
     string input;
-    cin >> input;
+    cin >> input;  //사용자로부터 입력을 받음
 
-    while (input != "end") {
-        todo_list[todo_count] = input;
-        todo_count++;
+    while (input != "end") { //사용가자 end를 입력할때까지 루프 반복
+        todo_list[todo_count] = input;  //입력받은 할 일을 todo_list에 추가
+        todo_count++;  //todo_list에 저장된 할 일의 개수를 하나 증가시킴
         cin >> input;
     }
     cout << endl << "============== TO DO ===============" << endl << endl;
     for (int i = 0; i < todo_count; i++) {
-        cout << i + 1 << ". " << todo_list[i] << endl;
+        cout << i + 1 << ". " << todo_list[i] << endl;  //todo_list 출력
     }
 }
 
-void completeinput()
+void completeinput()  //완료한일을 목록에 추가하는 함수
 {
     cout << "[ 완료한 일 추가 ]" << endl << endl;
-    cout << "완료한 일의 번호를 입력하세요 : ";
+    cout << "완료한 일의 번호를 입력하세요 : ";  //todo_list에 번호가 매겨진 번호를 입력
 
     int index;
-    cin >> index;
+    cin >> index;  //사용자로부터 입력받은 변수를 index에 저장
 
-    if (index >= 1 && index <= todo_count) {
-        string completed_item = todo_list[index - 1];
+    if (index >= 1 && index <= todo_count) {  //입력된번호가 유효한 범위내에 존재하는지 확인
+        string completed_item = todo_list[index - 1];  //todo_list에서 입력받은 번호의 완료한일을 completed_item 변수에 저장
         complete_list[complete_count] = completed_item;
-        complete_count++;
+        complete_count++;  //완료한일의 개수 증가
 
         for (int i = index - 1; i < todo_count - 1; i++) {
             todo_list[i] = todo_list[i + 1];
         }
-        todo_count--;
+        todo_count--;  //완료한 일을 todo_list에서 삭제하고 todo_list와 complete_item 목록의 항목에 매겨진 번호를 다시 매김
 
         cout << endl << "============= COMPLETE =============" << endl << endl;
         for (int i = 0; i < complete_count; i++) {
             cout << i + 1 << ". " << complete_list[i] << endl;
         }
+        //완료한일 출력
 
         cout << endl << "============== TO DO ===============" << endl << endl;
         for (int i = 0; i < todo_count; i++) {
             cout << i + 1 << ". " << todo_list[i] << endl;
         }
+        //해야할일 력출력
     }
     else {
-        cout << "유효하지 않은 번호입니다." << endl;
+        cout << "유효하지 않은 번호입니다." << endl;  //todo_list의 목록에서 매겨진번호와 다른 번호 입력시
     }
 }
 
@@ -67,6 +69,7 @@ int main(void)
     cin >> month;
     cout << "원하는 날(일)을 입력하세요 > ";
     cin >> day;
+    //사용자에게 날짜를 입력받음
 
     while (1)
     {
@@ -80,15 +83,18 @@ int main(void)
         cin >> num;
         cout << endl;
 
-        switch (num)
+        switch (num)  //옵션 네개중 하나를 사용자에게 입력받음
         {
         case 1:
             todoinput();
             continue;
+        //할일을 추가할수있음
 
         case 2:
             completeinput();
             continue;
+        //완료한일을 추가할 수 있음
+        
         case 3:
             cout << "원하는 달(월)을 입력하세요 > ";
             cin >> month;
@@ -109,9 +115,12 @@ int main(void)
                 cout << i + 1 << ". " << complete_list[i] << endl;
             }
             continue;
+        //원하는 날짜를 다시 선택하여 다시 main함수 
+        
         case 4:
             cout << "프로그램을 종료합니다." << endl;
             return 0;
+       //프로그램 종료
 
         default:
             cout << "유효하지 않은 번호입니다. 다시 입력하세요." << endl;
